@@ -1,11 +1,16 @@
-# BTC Race Bot — Sniper + Dip-Buy
+# WideTrail
 
-[![make.fun · btc-race-24h-20261117-0603](https://make.fun/badge/btc-race-24h-20261117-0603.svg)](https://make.fun/bounty/btc-race-24h-20261117-0603?utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261117-0603)
-[![rank](https://make.fun/badge/btc-race-24h-20261117-0603/Masrukhan25/btc-race-24h-20261117-0603-entry-acct1/rank.svg)](https://make.fun/bounty/btc-race-24h-20261117-0603/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261117-0603)
-[![reward](https://make.fun/badge/btc-race-24h-20261117-0603/Masrukhan25/btc-race-24h-20261117-0603-entry-acct1/reward.svg)](https://make.fun/bounty/btc-race-24h-20261117-0603?utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261117-0603)
+[![make.fun](https://make.fun/badge/btc-race-24h-20261117-0603.svg)](https://make.fun/competitions/btc-race-24h-20261117-0603)
+[![rank](https://make.fun/badge/btc-race-24h-20261117-0603/Masrukhan25/btc-race-24h-20261117-0603-entry-acct1/rank.svg)](https://make.fun/competitions/btc-race-24h-20261117-0603)
+[![reward](https://make.fun/badge/btc-race-24h-20261117-0603/Masrukhan25/btc-race-24h-20261117-0603-entry-acct1/reward.svg)](https://make.fun/competitions/btc-race-24h-20261117-0603)
 
-A long-only cbBTC trading bot for the [Race a BTC trading bot live for 24 hours](https://make.fun/bounty/btc-race-24h-20261117-0603) bounty. It trades two setups and otherwise stays in cash: Setup B, a capitulation-bounce sniper that buys the violent bounce after a multi-hour capitulation (drop >= 550 bps from the 720-bar high, long lower wick, sharp +60 bps reversal bar, RSI turning up, R:R >= 2:1, trailing stop +80/+80); and Setup D, a loose dip-buy for calm, range-bound windows that buys a dip of >= 120 bps off the 120-bar high when RSI(14) < 50 and the bar closes up, with an 80 bps stop and a +100/+100 trailing stop, capped at one dip trade per window. At most 3 trades per window, stop after 2 consecutive bounce losses, stop entering below 98% of starting equity, no entries after bar 1320.
+A BTC trading bot for the make.fun race "Race a BTC trading bot live for 24 hours" (btc-race-24h-20261117-0603).
 
-## License
+WideTrail trades Coinbase Wrapped BTC (cbBTC) against USDC, minute by minute, long only, starting from $1,000 paper money. Two setups:
 
-MIT — see [LICENSE](LICENSE).
+- **Setup B (capitulation-bounce sniper):** a deep fall from the 720-bar high (≥ 550 bps) plus a long lower-wick bar, a reversal bar that closes up ≥ 60 bps above the previous bar's high, RSI(14) turning up, and room back to the high at least twice the risk. The stop sits below the capitulation low, clamped to 50–100 bps under the entry.
+- **Setup D (sharp-drop dip-buy):** the close fell ≥ 120 bps from the 120-bar high but is not a capitulation (720-bar fall under 550 bps), RSI(14) sits under 50, the close also fell ≥ 150 bps over the last 60 bars (a fast fall, close-to-close), and this bar closes up. Max 1 dip trade.
+
+WideTrail exits with a wider trailing stop (arm/trail 90/90) and holds the dip up to 400 bars. Stops are set at decision time from the decision bar's close, never from the fill price.
+
+Backtests (faithful harness replica): dev +$16.76, race (14–15 Nov) +$25.71, held-out (11 Binance windows) +$15.89.
